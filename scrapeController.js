@@ -1,4 +1,5 @@
 const scrapers = require("./scraper");
+const fs = require("fs");
 
 const scrapeController = async (browserInstance) => {
   const url = "https://phongtro123.com/";
@@ -12,8 +13,28 @@ const scrapeController = async (browserInstance) => {
     const selectedCategories = categories.filter((category, index) => {
       return indexs.some((i) => i === index);
     });
-    await scrapers.scraper(browser, selectedCategories[0].link);
-    console.log(selectedCategories);
+    // let results1 = await scrapers.scraper(browser, selectedCategories[0].link);
+    // fs.writeFile("chothuephongtro.json", JSON.stringify(results), (err) => {
+    //   if (err) console.log("Ghi data vô file thất bại", err);
+    //   console.log("Ghi data vô file thành công");
+    // });
+    let results2 = await scrapers.scraper(browser, selectedCategories[0].link);
+    fs.writeFile("nhachothue.json", JSON.stringify(results2), (err) => {
+      if (err) console.log("Ghi data vô file thất bại", err);
+      console.log("Ghi data vô file thành công");
+    });
+    let results3 = await scrapers.scraper(browser, selectedCategories[0].link);
+    fs.writeFile("chothuecanho.json", JSON.stringify(results3), (err) => {
+      if (err) console.log("Ghi data vô file thất bại", err);
+      console.log("Ghi data vô file thành công");
+    });
+    let results4 = await scrapers.scraper(browser, selectedCategories[0].link);
+    fs.writeFile("chothuematbang.json", JSON.stringify(results4), (err) => {
+      if (err) console.log("Ghi data vô file thất bại", err);
+      console.log("Ghi data vô file thành công");
+    });
+
+    await browser.close();
   } catch (error) {
     console.log("Error: ", error);
   }
